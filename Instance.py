@@ -185,7 +185,7 @@ def find_single_result_after_BLOCK(filepath, test_item):
         with open(filepath, 'r', encoding='utf-8') as f:
             for line in f:
 
-                match = re.search(r"{@BTEST\|(W\w+)\|", line)
+                match = re.search(r"{@BTEST\|(\w+)\|", line)
                 if match:
                     extracted_value = match.group(1)  # 取得第一個分組 SN
                     # print(extracted_value)
@@ -193,7 +193,7 @@ def find_single_result_after_BLOCK(filepath, test_item):
                     pass
                     # print("找不到符合的字串")
 
-                if re.search(r'{@BLOCK\|\d+%' + re.escape(test_item) + r'\|', line):
+                if re.search(r'{@BLOCK\|' + re.escape(test_item) + r'\|', line):
                     try:
                         next_line = next(f).strip() # 獲取下一行
                         return " ".join([extracted_value, next_line])

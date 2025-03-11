@@ -1,1 +1,1 @@
-key=led1%cr%led
+key=p12v_stby_gnd
