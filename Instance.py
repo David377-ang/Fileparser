@@ -199,7 +199,7 @@ def find_single_result_after_BLOCK(filepath, test_item):
                         return " ".join([extracted_value, next_line])
                     except StopIteration:
                         return "{@BLOCK} 行後沒有內容"
-            return "找不到包含指定內容的 {@BLOCK} 行"
+            return " ".join([extracted_value, "找不到包含指定內容的 {@BLOCK} 行"])
     except FileNotFoundError:
         return f"找不到檔案：{filepath}"
     except Exception as e:
