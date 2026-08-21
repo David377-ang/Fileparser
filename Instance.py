@@ -74,6 +74,46 @@ def find_string_in_file_with_re(filepath, target_pattern):
     return matching_lines
 
 
+def find_string_in_file_with_re2(filepath, target_pattern):
+    """
+    使用 re.compile 在文件中查找符合模式的字符串，并返回包含该字符串的行。
+
+    Args:
+        filepath: 文件路径。
+        target_pattern: 要查找的目标字符串的正则表达式模式。
+
+    Returns:
+        一个列表，包含所有包含目标字符串的行（包含行号）。
+        如果未找到目标字符串，则返回空列表。
+        如果发生错误（如文件未找到），则返回错误消息字符串。
+    """
+    matching_lines =[]
+
+    with open(filepath, 'r', encoding='utf-8') as f:
+        for line in f:
+            match = re.search(r"{@BTEST\|(\w+)\|", line)
+            if match:
+                matching_lines.append (match.group(1))  # 取得第一個分組 SN
+                # print(extracted_value)
+            else:
+                 pass
+                 # print("找不到符合的字串")
+
+    try:
+        with open(filepath, 'r', encoding='utf-8') as file:
+
+            compiled_pattern = re.compile(target_pattern)  # 编译正则表达式
+            for line_number, line in enumerate(file, 1):
+                if compiled_pattern.search(line):  # 使用 search() 查找
+                    matching_lines.append((f"Line {line_number}: {line.strip()}"))
+    except FileNotFoundError:
+        return f"Error: File not found at {filepath}"
+    except Exception as e:
+        return f"Error: An unexpected error occurred: {e}"
+
+    return matching_lines
+
+
 
 def print_file_content(filepath):
     """印出檔案的完整內容"""
@@ -262,19 +302,29 @@ def main():
         return
     
 
-    # for filepath in file_list:
-    #     result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
-    #     Output_list.append(result)
-
     for filepath in file_list:
-        result = find_single_result_after_BLOCK(os.path.join(log_dir, filepath), test_item)
-        if isinstance(result, str) and result.startswith("Error:"):
-            print(result)  # 顯示錯誤訊息
-        else:
-            Output_list.append(result)
+        result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
+        Output_list.append(result)
+
+    # for filepath in file_list:
+    #     result = find_single_result_after_BLOCK(os.path.join(log_dir, filepath), test_item)
+    #     if isinstance(result, str) and result.startswith("Error:"):
+    #         print(result)  # 顯示錯誤訊息
+    #     else:
+    #         Output_list.append(result)
+
+
+
 
     # target_pattern = r"\{\@RPT\|1%led3%cr%led HAS FAILED\}"  # 使用原始字符串 (raw string)
     # result = find_string_in_file_with_re(join(os.getcwd(),"Log",filepath), target_pattern)
+    # Output_list.append(result)
+
+    # for filepath in file_list:
+    #     target_pattern = r"\{@A-JUM\|0\|\+[\d\.E\+]+\|P12V_STBY\{@LIM2\|\+9\.999999E\+99\|\+1\.000000E\+02\}\}"
+    #     result = find_string_in_file_with_re2(join(os.getcwd(),"Log",filepath), target_pattern)
+    #     Output_list.append(result)
+
     # result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
     
     
