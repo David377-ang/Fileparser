@@ -322,9 +322,10 @@ def main():
 
     for filepath in file_list:
         #  target_pattern = r"\{@A-JUM\|0\|\+[\d\.E\+]+\|P12V_STBY\{@LIM2\|\+9\.999999E\+99\|\+1\.000000E\+02\}\}"
-         target_pattern = r"R297.*?([\d\.]+K)"
-         result = find_string_in_file_with_re2(join(os.getcwd(),"Log",filepath), target_pattern)
-         Output_list.append(result)
+        target_components = ["D6"]
+        target_pattern = r"\b(" + "|".join(re.escape(c) for c in target_components) + r")\b"
+        result = find_string_in_file_with_re2(join(os.getcwd(),"Log",filepath), target_pattern)
+        Output_list.append(result)
 
     # result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
     
@@ -342,7 +343,7 @@ def main():
     #     print(result)
 
 
-    write_list_to_file(Output_list)    
+    write_list_to_file(Output_list, f"parser_result_{'_'.join(target_components)}.txt")    
     # write_string_to_file(result)
 
 if __name__ == "__main__":
