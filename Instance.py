@@ -302,9 +302,9 @@ def main():
         return
     
 
-    for filepath in file_list:
-        result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
-        Output_list.append(result)
+    # for filepath in file_list:
+    #     result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
+    #     Output_list.append(result)
 
     # for filepath in file_list:
     #     result = find_single_result_after_BLOCK(os.path.join(log_dir, filepath), test_item)
@@ -320,10 +320,11 @@ def main():
     # result = find_string_in_file_with_re(join(os.getcwd(),"Log",filepath), target_pattern)
     # Output_list.append(result)
 
-    # for filepath in file_list:
-    #     target_pattern = r"\{@A-JUM\|0\|\+[\d\.E\+]+\|P12V_STBY\{@LIM2\|\+9\.999999E\+99\|\+1\.000000E\+02\}\}"
-    #     result = find_string_in_file_with_re2(join(os.getcwd(),"Log",filepath), target_pattern)
-    #     Output_list.append(result)
+    for filepath in file_list:
+        #  target_pattern = r"\{@A-JUM\|0\|\+[\d\.E\+]+\|P12V_STBY\{@LIM2\|\+9\.999999E\+99\|\+1\.000000E\+02\}\}"
+         target_pattern = r"R297.*?([\d\.]+K)"
+         result = find_string_in_file_with_re2(join(os.getcwd(),"Log",filepath), target_pattern)
+         Output_list.append(result)
 
     # result = find_single_result_after_BLOCK(join(os.getcwd(),"Log",filepath), test_item)
     
