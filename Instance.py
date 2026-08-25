@@ -341,7 +341,7 @@ def main():
     #     print(result)
 
 
-    write_list_to_file(Output_list)    
+    write_list_to_file(Output_list, f"parser_result_{join(test_item)}.txt")    
     # write_string_to_file(result)
 
 if __name__ == "__main__":
